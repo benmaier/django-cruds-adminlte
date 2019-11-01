@@ -16,9 +16,11 @@ class DatePickerWidget(Widget):
         context['name'] = name
         if value is not None:
             context['value'] = value
+            print(value)
         if 'format' not in context:
             context['format'] = 'mm/dd/yyyy'
-        context['djformat'] = settings.DATE_FORMAT
+        if 'djformat' not in context:
+            context['djformat'] = settings.DATE_FORMAT
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -39,7 +41,8 @@ class TimePickerWidget(Widget):
             context['value'] = value
         if 'format' not in context:
             context['format'] = 'HH:ii P'
-        context['djformat'] = settings.TIME_FORMAT
+        if 'djformat' not in context:
+            context['djformat'] = settings.TIME_FORMAT
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -61,7 +64,8 @@ class DateTimePickerWidget(Widget):
 
         if 'format' not in context:
             context['format'] = 'mm/dd/yyyy hh:ii:ss'
-        context['djformat'] = settings.DATETIME_FORMAT
+        if 'djformat' not in context:
+            context['djformat'] = settings.DATETIME_FORMAT
 
         return context
 
