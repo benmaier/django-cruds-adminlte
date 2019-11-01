@@ -3,6 +3,7 @@
 # C extensions
 *.so
 
+
 # Packages
 .eggs
 *.egg
@@ -51,3 +52,6 @@ tests/demo_project/db.sqlite3
 tests/reports/
 
 TODO.md
+
+# vim swp files
+*.swp
