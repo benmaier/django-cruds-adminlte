@@ -47,6 +47,12 @@ class InlineAjaxCRUD(CRUDView):
                 context['views_available'] = self.views_available
                 return context
 
+            def get_form_kwargs(self):
+                kwargs = super(CreateView, self).get_form_kwargs()
+                if self.form_class:
+                    kwargs.update({'pk': self.model_id})
+                return kwargs
+
             def form_valid(self, form):
                 self.object = form.save(commit=False)
                 setattr(self.object, self.inline_field, self.model_id)
@@ -106,6 +112,12 @@ class InlineAjaxCRUD(CRUDView):
                 context['name'] = self.name
                 context['views_available'] = self.views_available
                 return context
+
+            def get_form_kwargs(self):
+                kwargs = super(UpdateView, self).get_form_kwargs()
+                if self.form_class:
+                    kwargs.update({'pk': self.model_id})
+                return kwargs
 
             def get(self, request, *args, **kwargs):
                 self.model_id = get_object_or_404(
