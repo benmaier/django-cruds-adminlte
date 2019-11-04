@@ -9,7 +9,7 @@
         </li>
     {% endif %}
         <li class="paginate_button">
-            <span>{% trans "Page" %} {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}</span>
+            <span>Seite {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}</span>
         </li>
     {% if page_obj.has_next %}
         <li class="paginate_button">
