@@ -49,6 +49,8 @@
     $(".modal select:first").parent().parent().hide();
     {% endif %}
 
+    $(".modal").removeAttr("tabindex");
+
     function success() {
         $('#edit_modal').modal('hide');
     }
