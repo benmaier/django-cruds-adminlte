@@ -2,10 +2,10 @@
 {% load i18n %}
 {% load crud_tags %}
 
-{% block title %}{% if blocks.title %}{{ blocks.page_description }}{% else %}{% trans "List of" %} {{ model_verbose_name_plural|lower }}{% endif %}{% endblock %}
+{% block title %}{% if blocks.title %}{{ blocks.page_description }}{% else %}Auflistung: {{ model_verbose_name_plural }}{% endif %}{% endblock %}
 {% block body_class %}{{ blocks.body_class|default:model_verbose_name_plural|lower }}{% endblock body_class %}
 {% block page_name %}{{ blocks.page_name|default:model_verbose_name_plural }}{% endblock %}
-{% block page_description %}{% if blocks.page_description %}{{ blocks.page_description }}{% else %}{% trans "List of" %} {{ model_verbose_name_plural|lower }}{% endif %}{% endblock %}
+{% block page_description %}{% if blocks.page_description %}{{ blocks.page_description }}{% else %}Auflistung: {{ model_verbose_name_plural }}{% endif %}{% endblock %}
 
 
 {% block content %}
@@ -20,7 +20,7 @@
                         {% crud_url object "create" namespace as url %}
                         {% if url and 'create' in views_available and crud_perms.create %}
                           <a href="{{ url }}{{getparams}}" class="btn btn-primary">
-                              {% trans "Create new " %} {{ model_verbose_name|lower }}</a>
+                              Neu erstellen: {{ model_verbose_name }}</a>
                           {%endif%}
                     </div>
                     {% endif %}
@@ -28,7 +28,7 @@
                     <div class="col-lg-6 search">
                         <form action="" method="get">
                             <div class="input-group">
-                                <input type="text" name="q" value="{{q}}" class="form-control" placeholder="{% trans 'Search for...' %}">
+                                <input type="text" name="q" value="{{q}}" class="form-control" placeholder="Suche nach ...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-flat" type="submit">
                                         <i class="fa fa-search"></i>
@@ -45,7 +45,7 @@
                 <div class="filters">
                     <div class="box box-warning collapsed-box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">{% trans 'Filters' %}</h3>
+                            <h3 class="box-title">{% trans 'Filter' %}</h3>
                             <div class="box-tools pull-right">
                                 <button data-widget="collapse" class="btn btn-box-tool btn-success" type="button">
                                     <i class="fa fa-plus"></i>
@@ -60,7 +60,7 @@
                                     {% endfor %}
                                 </table>
                                 <input type="submit" class="btn btn-info filter" value="{% trans 'Filter' %}" />
-                                <a class="btn btn-warning" href="?"> {% trans 'Clean filter' %} </a>
+                                <a class="btn btn-warning" href="?"> Filter leeren </a>
                             </form>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             {% for field, field_name in fields.items %}
                             <th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
                             {% endfor %}
-                            <th>{% trans "Actions" %}</th>
+                            <th>Aktionen</th>
                             {% endblock thead %}
                         </thead>
                         <tbody>
@@ -99,15 +99,15 @@
                                 {% block actions %}
                                   {% crud_url object "detail" namespace as url %}
                                     {% if url and 'detail' in views_available and crud_perms.detail %}
-                                    <a href="{{ url }}{{getparams}}" class="btn btn-success">{% trans "Show" %}</a>
+                                    <a href="{{ url }}{{getparams}}" class="btn btn-success"><b>&#9432;</b></a>
                                     {% endif %}
                                     {% crud_url object "update" namespace as url %}
                                     {% if url and 'update' in views_available and crud_perms.update %}
-                                    <a href="{{ url }}{{getparams}}" class="btn btn-primary">{% trans "Edit" %}</a>
+                                    <a href="{{ url }}{{getparams}}" class="btn btn-primary"><b>&#10000;</b></a>
                                     {% endif %}
                                     {% crud_url object "delete" namespace as url %}
                                     {% if url and 'delete' in views_available and crud_perms.delete %}
-                                    <a href="{{ url }}{{getparams}}" class="btn btn-danger">{% trans "Delete" %}</a>
+                                    <a href="{{ url }}{{getparams}}" class="btn btn-danger"><b>&times;</b></a>
                                     {% endif %}
                                 {% endblock %}
                               </td>
@@ -117,7 +117,7 @@
                         </tbody>
                     {% else %}
                       <thead><th></th></thead>
-                      <tbody><tr><td>{% trans "No items yet." %}</td></tr></tbody>
+                      <tbody><tr><td>Bisher keine Eintr&auml;ge</td></tr></tbody>
                     {% endif %}
                     </table>
 

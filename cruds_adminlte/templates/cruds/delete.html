@@ -2,13 +2,13 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans "Remove" %} {{ object }}?</h1>
+  <h1>{{ object }} l&ouml;schen?</h1>
 
   <form action="{{ url_delete }}{{getparams}}" method="POST">
     {% csrf_token %}
 
     <p>
-      <button type="submit" class="btn btn-danger">{% trans "Confirm remove" %}</button>
+      <button type="submit" class="btn btn-danger">L&ouml;schen best&auml;tigen</button>
     </p>
   </form>
 {% endblock %}

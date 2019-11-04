@@ -11,7 +11,7 @@
                 {% for field, field_name in fields.items %}
                 <th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
                 {% endfor %}
-                <th>{% trans "Actions" %}</th>
+                <th>Aktionen</th>
                 {% endblock thead %}
             </thead>
             <tbody>
@@ -32,7 +32,9 @@
                         <a data-ajax="" data-success="function(){}"
                           id="#{{ name }}_{{ object.pk }}_show"
                           data-replace-inner="#{{name}}_editList"
-                          href="{{ url }}" class="btn btn-success">{% trans "Show" %}</a>
+                          href="{{ url }}" class="btn btn-success">
+                            <b>&#9432;</b>
+                        </a>
                       {% endif %}
 
                       {%  crud_inline_url base_model object 'update' namespace as url  %}
@@ -42,7 +44,8 @@
                           data-replace-inner="#edit_modal_inner"
                           href="{{ url }}"
                           class="btn btn-primary">
-                          {% trans "Edit" %}</a>
+                         <b>&#10000;</b>
+                        </a>
                       {% endif %}
 
                       {%  crud_inline_url base_model object 'delete' namespace as url %}
@@ -52,7 +55,9 @@
                           id="#{{ name }}_{{ object.pk }}_delete"
                           data-replace-inner="#delete_modal_inner"
                           href="{{ url }}"
-                          class="btn btn-danger">{% trans "Delete" %}</a>
+                          class="btn btn-danger">
+                            <b>&times;</b>
+                        </a>
                       {% endif %}
                   </td>
                 </tr>
