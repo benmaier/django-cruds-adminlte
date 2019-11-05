@@ -43,12 +43,12 @@
                 {% if filters %}
 
                 <div class="filters">
-                    <div class="box box-warning collapsed-box">
+                    <div class="box box-warning" id="filterCollapseBox">
                         <div class="box-header with-border">
                             <h3 class="box-title">{% trans 'Filter' %}</h3>
                             <div class="box-tools pull-right">
-                                <button data-widget="collapse" class="btn btn-box-tool btn-success" type="button">
-                                    <i class="fa fa-plus"></i>
+                                <button data-widget="collapse" class="btn btn-box-tool btn-success" type="button" id="filterCollapse">
+                                    <i class="fa fa-minus" id="filterCollapseButtonLabel"></i>
                                 </button>
                             </div>
                         </div>
@@ -59,12 +59,22 @@
                                     {{filter.render }}
                                     {% endfor %}
                                 </table>
-                                <input type="submit" class="btn btn-info filter" value="{% trans 'Filter' %}" />
-                                <a class="btn btn-warning" href="?"> Filter leeren </a>
+                                <input type="submit" class="btn btn-info filter" value="Filtern" />
+                                <a class="btn btn-warning" href="?">Filter leeren</a>
                             </form>
                         </div>
                     </div>
                 </div>
+                <script>
+                    if (window.location.search.length <= 1)
+                    {
+                        $('#filterCollapseBox').addClass("collapsed-box");
+                        $('#filterCollapseButtonLabel').removeClass("fa-minus")
+                        $('#filterCollapseButtonLabel').removeClass("fa-minus")
+                                                       .addClass("fa-plus");
+                    }
+                </script>
+                
                 {% endif%}
 
                 <div class="box-body">

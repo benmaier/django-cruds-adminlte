@@ -26,13 +26,14 @@
     </div>
 
 
+    {% if not form.helper %}
     <div class="box-footer">
         <div class="form-group">
             <div class="controls">
                 <button
                     id="{{name}}_{{object.pk}}_addedit_submit"
                     type="submit"
-                    class="btn btn-primary">{% trans "Submit" %}</button>
+                    class="btn btn-primary">Abschicken</button>
                 <a href="javascript::void(0);"
                     onclick="$('#{{name}}_editList').html('');"
                     class="btn btn-warning"
@@ -40,6 +41,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </form>
 
 
@@ -55,6 +57,8 @@
         $('#edit_modal').modal('hide');
     }
 
-    $('.modal #submit-id-submit').parent().parent().remove(); // FIXME: Remove the crispy buttons
+    {% if form.helper %}
+        //$('.modal #submit-id-submit').parent().parent().remove(); // FIXME: Remove the crispy buttons
+    {% endif %}
     $('#edit_modal').modal('show');
 </script>
