@@ -109,15 +109,15 @@
                                 {% block actions %}
                                   {% crud_url object "detail" namespace as url %}
                                     {% if url and 'detail' in views_available and crud_perms.detail %}
-                                    <a href="{{ url }}{{getparams}}" class="btn btn-success"><b>&#9432;</b></a>
+                                    <a href="{{ url }}{{getparams}}" class="btn btn-default"><i class="fa fa-info-circle" style="color: #888;"></i></a>
                                     {% endif %}
                                     {% crud_url object "update" namespace as url %}
                                     {% if url and 'update' in views_available and crud_perms.update %}
-                                    <a href="{{ url }}{{getparams}}" class="btn btn-primary"><b>&#10000;</b></a>
+                                    <a href="{{ url }}{{getparams}}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     {% endif %}
                                     {% crud_url object "delete" namespace as url %}
                                     {% if url and 'delete' in views_available and crud_perms.delete %}
-                                    <a href="{{ url }}{{getparams}}" class="btn btn-danger"><b>&times;</b></a>
+                                    <a href="{{ url }}{{getparams}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     {% endif %}
                                 {% endblock %}
                               </td>
