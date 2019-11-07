@@ -27,8 +27,8 @@
                   </td>
                   {% endfor %}
                   <td>
+                      {% if 'detail' in views_available %}
                       {%  crud_inline_url base_model object 'detail' namespace as url  %}
-                      {% if url and 'detail' in views_available %}
                         <a data-ajax="" data-success="function(){}"
                           id="#{{ name }}_{{ object.pk }}_show"
                           data-replace-inner="#{{name}}_editList"
@@ -37,8 +37,8 @@
                         </a>
                       {% endif %}
 
+                      {% if 'update' in views_available %}
                       {%  crud_inline_url base_model object 'update' namespace as url  %}
-                      {% if url and 'update' in views_available %}
                         <a data-ajax="" data-success="function(){}"
                           id="#{{ name }}_{{ object.pk }}_edit"
                           data-replace-inner="#edit_modal_inner"
@@ -49,8 +49,8 @@
                         </a>
                       {% endif %}
 
+                      {% if 'delete' in views_available %}
                       {%  crud_inline_url base_model object 'delete' namespace as url %}
-                      {% if url and 'delete' in views_available %}
 
                         <a data-ajax="" data-success="function(){}"
                           id="#{{ name }}_{{ object.pk }}_delete"

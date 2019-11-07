@@ -50,13 +50,13 @@ def crud_inline_url(obj, inline, action, namespace=None):
         nurl = utils.crud_url_name(type(inline), action, base_model=obj.__class__)
         if namespace:
             nurl = namespace + ':' + nurl
-        if action in ['delete', 'update']:
+        if action in ['delete', 'update', 'detail']:
             url = reverse(nurl, kwargs={'model_id': obj.pk,
                                         'pk': inline.pk})
         else:
             url = reverse(nurl, kwargs={'model_id': obj.pk})
     except NoReverseMatch as e:
-        all_tried_names.append(nurl)
+        all_tried_names.append((nurl,e))
 
         # it could be that base_model is a child class and thus 
         # the url does not exist when the inline was only defined for a
@@ -67,21 +67,23 @@ def crud_inline_url(obj, inline, action, namespace=None):
                 nurl = utils.crud_url_name(type(inline), action, base_model=base)
                 if namespace:
                     nurl = namespace + ':' + nurl
-                if action in ['delete', 'update']:
+                if action in ['delete', 'update', 'detail']:
                     url = reverse(nurl, kwargs={'model_id': obj.pk,
                                                 'pk': inline.pk})
                 else:
                     url = reverse(nurl, kwargs={'model_id': obj.pk})
                 no_match = False
             except NoReverseMatch as e:
-                all_tried_names.append(nurl)
+                all_tried_names.append((nurl,e))
 
             if not no_match:
                 break
 
         if no_match:
             raise NoReverseMatch('No reverse match was found for any of the following url_names: "'+\
-                                 '", "'.join(all_tried_names))
+                    '", "'.join(n[0] for n in all_tried_names) +'". These are the raised errors: ' +\
+                    ", ".join("{}".format(n[1]) for n in all_tried_names)
+                    )
 
     return url
 
