@@ -16,7 +16,6 @@ class DatePickerWidget(Widget):
         context['name'] = name
         if value is not None:
             context['value'] = value
-            print(value)
         if 'format' not in context:
             context['format'] = 'mm/dd/yyyy'
         if 'djformat' not in context:
