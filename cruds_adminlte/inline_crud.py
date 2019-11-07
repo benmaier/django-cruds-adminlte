@@ -207,33 +207,48 @@ class InlineAjaxCRUD(CRUDView):
 
     def get_urls(self):
 
-        base_name = "%s/%s" % (self.model._meta.app_label,
-                               self.model.__name__.lower())
+        base_name = "{}/{}/{}".format(self.model._meta.app_label,
+                                      self.model.__name__.lower(),
+                                      self.base_model.__name__.lower(),
+                                      )
         myurls = []
         if 'list' in self.views_available:
             myurls.append(url("^%s/(?P<model_id>[^/]+)/list$" % (base_name,),
                               self.list,
                               name=utils.crud_url_name(
-                                  self.model, 'list', prefix=self.urlprefix)))
+                                  self.model, 'list', prefix=self.urlprefix,
+                                  base_model=self.base_model,
+                                  )
+                              )
+                         )
         if 'create' in self.views_available:
             myurls.append(url("^%s/(?P<model_id>[^/]+)/create$" % (base_name,),
                               self.create,
                               name=utils.crud_url_name(
-                                  self.model, 'create', prefix=self.urlprefix))
+                                  self.model, 'create', prefix=self.urlprefix,
+                                  base_model=self.base_model,
+                                  )
+                              )
                           )
         if 'detail' in self.views_available:
             myurls.append(url('^%s/(?P<model_id>[^/]+)/(?P<pk>[^/]+)$' %
                               (base_name,),
                               self.detail,
                               name=utils.crud_url_name(
-                                  self.model, 'detail', prefix=self.urlprefix))
+                                  self.model, 'detail', prefix=self.urlprefix,
+                                  base_model=self.base_model,
+                                  )
+                              )
                           )
         if 'update' in self.views_available:
             myurls.append(url("^%s/(?P<model_id>[^/]+)/(?P<pk>[^/]+)/update$" %
                               (base_name,),
                               self.update,
                               name=utils.crud_url_name(
-                                  self.model, 'update', prefix=self.urlprefix))
+                                  self.model, 'update', prefix=self.urlprefix,
+                                  base_model=self.base_model,
+                                  )
+                              )
                           )
         if 'delete' in self.views_available:
             myurls.append(url(r"^%s/(?P<model_id>[^/]+)/(?P<pk>[^/]+)/delete$"
@@ -241,7 +256,10 @@ class InlineAjaxCRUD(CRUDView):
                           (base_name,),
                           self.delete,
                           name=utils.crud_url_name(
-                              self.model, 'delete', prefix=self.urlprefix))
+                              self.model, 'delete', prefix=self.urlprefix,
+                              base_model=self.base_model,
+                              )
+                            )
                           )
 
         return myurls

@@ -24,14 +24,18 @@ LIST_ACTIONS = (
 ALL_ACTIONS = LIST_ACTIONS + INSTANCE_ACTIONS
 
 
-def crud_url_name(model, action, prefix=None):
+def crud_url_name(model, action, prefix=None, base_model=None):
     """
     Returns url name for given model and action.
     """
     if prefix is None:
         prefix = ""
+    if base_model is None:
+        base_model_lower = ""
+    else:
+        base_model_lower = base_model.__name__.lower()
     app_label = model._meta.app_label
-    model_lower = model.__name__.lower()
+    model_lower = model.__name__.lower() + base_model_lower
     return '%s%s_%s_%s' % (prefix, app_label, model_lower, action)
 
 
