@@ -377,6 +377,7 @@ class CRUDView(object):
 
             def get_success_url(self):
                 url = super(OCreateView, self).get_success_url()
+                print("success_url:", url)
                 if (self.getparams):  # fixed filter create action
                     url += '?' + self.getparams
                 return url
