@@ -44,8 +44,10 @@ def crud_url(obj, action, namespace=None):
 
 @register_tag
 def crud_inline_url(obj, inline, action, namespace=None):
+
+    all_tried_names = []
     try:
-        nurl = utils.crud_url_name(type(inline), action)
+        nurl = utils.crud_url_name(type(inline), action, base_model=obj.__class__)
         if namespace:
             nurl = namespace + ':' + nurl
         if action in ['delete', 'update']:
@@ -53,8 +55,34 @@ def crud_inline_url(obj, inline, action, namespace=None):
                                         'pk': inline.pk})
         else:
             url = reverse(nurl, kwargs={'model_id': obj.pk})
-    except NoReverseMatch:
-        url = None
+    except NoReverseMatch as e:
+        all_tried_names.append(nurl)
+
+        # it could be that base_model is a child class and thus 
+        # the url does not exist when the inline was only defined for a
+        # parent class
+        no_match = True
+        for base in obj.__class__.__bases__:
+            try:
+                nurl = utils.crud_url_name(type(inline), action, base_model=base)
+                if namespace:
+                    nurl = namespace + ':' + nurl
+                if action in ['delete', 'update']:
+                    url = reverse(nurl, kwargs={'model_id': obj.pk,
+                                                'pk': inline.pk})
+                else:
+                    url = reverse(nurl, kwargs={'model_id': obj.pk})
+                no_match = False
+            except NoReverseMatch as e:
+                all_tried_names.append(nurl)
+
+            if not no_match:
+                break
+
+        if no_match:
+            raise NoReverseMatch('No reverse match was found for any of the following url_names: "'+\
+                                 '", "'.join(all_tried_names))
+
     return url
 
 

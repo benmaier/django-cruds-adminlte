@@ -207,7 +207,7 @@ class InlineAjaxCRUD(CRUDView):
 
     def get_urls(self):
 
-        base_name = "{}/{}/{}".format(self.model._meta.app_label,
+        base_name = "{}/{}{}".format(self.model._meta.app_label,
                                       self.model.__name__.lower(),
                                       self.base_model.__name__.lower(),
                                       )
