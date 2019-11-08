@@ -11,7 +11,9 @@
                 {% for field, field_name in fields.items %}
                 <th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
                 {% endfor %}
-                <th>Aktionen</th>
+                {%if "detail" in views_available or "update" in views_available or "delete" in views_available %}
+                    <th>Aktionen</th>
+                {% endif %}
                 {% endblock thead %}
             </thead>
             <tbody>
@@ -26,6 +28,7 @@
                     {# typefield #}
                   </td>
                   {% endfor %}
+                {%if "detail" in views_available or "update" in views_available or "delete" in views_available %}
                   <td>
                       {% if 'detail' in views_available %}
                       {%  crud_inline_url base_model object 'detail' namespace as url  %}
@@ -62,6 +65,7 @@
                         </a>
                       {% endif %}
                   </td>
+                  {% endif %}
                 </tr>
               {% endfor %}
               {% endblock tbody %}
