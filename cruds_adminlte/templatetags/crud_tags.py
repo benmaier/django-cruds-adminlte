@@ -93,11 +93,13 @@ def format_value(obj, field_name):
     """
     Simple value formatting.
 
-    If value is model instance returns link to detail view if exists.
+    If value is model instance returns link to update view if exists.
     """
+
     if '__' in field_name:
         related_model, field_name = field_name.split('__', 1)
         obj = getattr(obj, related_model)
+
     display_func = getattr(obj, 'get_%s_display' % field_name, None)
     if display_func:
         return display_func()
@@ -116,6 +118,15 @@ def format_value(obj, field_name):
             return ''
 
     if isinstance(value, models.Model):
+        #This is a hack to obtain the proper
+        #string to find the right url for an object initiated as
+        #a child class but referenced as a parent-class object
+        #in the CRUD templates.
+        try:
+            value = value._get_child_object()
+        except AttributeError as e:
+            pass
+
         url = crud_url(value, utils.ACTION_UPDATE)
         if url:
             return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
@@ -134,6 +145,15 @@ def format_many_values(obj, field_name, separator=', '):
     result = []
 
     for v in objects:
+        #This is a hack to obtain the proper
+        #string to find the right url for an object initiated as
+        #a child class but referenced as a parent-class object
+        #in the CRUD templates.
+        try:
+            v = v._get_child_object()
+        except AttributeError as e:
+            pass
+
         url = crud_url(v, utils.ACTION_UPDATE)
         if url:
             res = mark_safe('<a href="%s">%s</a>' % (url, escape(str(v))))
