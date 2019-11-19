@@ -358,6 +358,8 @@ class CRUDView(object):
             perms = self.perms['create']
             all_perms = self.perms
             form_class = self.add_form
+            has_inlines = self.inlines is not None and len(self.inlines) != 0
+            urlprefix = self.urlprefix
             view_type = 'create'
             views_available = self.views_available[:]
             check_perms = self.check_perms
@@ -375,9 +377,12 @@ class CRUDView(object):
                 self.object.save()
                 return HttpResponseRedirect(self.get_success_url())
 
-            def get_success_url(self):
-                url = super(OCreateView, self).get_success_url()
-                print("success_url:", url)
+            def get_success_url(self,obj=None):
+                if self.object and self.has_inlines:
+                    url = utils.crud_url(
+                        self.object, 'update', prefix=self.urlprefix)
+                else:
+                    url = super(OCreateView, self).get_success_url()
                 if (self.getparams):  # fixed filter create action
                     url += '?' + self.getparams
                 return url
